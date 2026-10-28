@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<title>Cata-vento Seletivo — Proposta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink: #141A1F;
+    --dim: #4A5A66;
+    --line: #D5DDE3;
+    --soft: #F3F6F8;
+    --alta: #12875A;
+    --baixa: #C8324B;
+    --adx: #B07A0C;
+  }
+  @page { size: A4; margin: 20mm 19mm 18mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; color: var(--ink); }
+  body {
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 10.4pt; line-height: 1.52;
+    max-width: 780px; margin: 0 auto; padding: 32px 16px 64px;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  @media print { body { padding: 0; max-width: none; } }
+
+  h1, h2, h3 { font-family: "Space Grotesk", ui-sans-serif, sans-serif; letter-spacing: -.02em; }
+  h1 { font-size: 26pt; line-height: 1.02; margin: 0 0 6px; }
+  h2 {
+    font-size: 14pt; margin: 24px 0 8px; padding-top: 10px;
+    border-top: 1px solid var(--line); break-after: avoid;
+  }
+  h2 .n { font-family: "IBM Plex Mono", monospace; font-size: 10pt; color: var(--alta); margin-right: 8px; font-weight: 500; }
+  h3 { font-size: 11.2pt; margin: 15px 0 4px; break-after: avoid; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 6px 0; padding-left: 20px; }
+  li { margin: 2px 0; }
+  code, .mono { font-family: "IBM Plex Mono", monospace; font-size: .9em; }
+  code { background: var(--soft); border: 1px solid var(--line); border-radius: 3px; padding: 0 .3em; }
+
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 8pt; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+  .sub { color: var(--dim); font-size: 11.5pt; margin: 4px 0 18px; }
+
+  .ident { width: 100%; border-collapse: collapse; margin: 14px 0 6px; }
+  .ident td { padding: 6px 10px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .ident td:first-child { width: 150px; color: var(--dim); font-size: 9.5pt; }
+  .preencher { background: #FFF4D6; border-bottom: 1px dashed var(--adx); padding: 0 4px; }
+
+  table.t { width: 100%; border-collapse: collapse; margin: 8px 0 10px; font-size: 9.5pt; break-inside: avoid; }
+  table.t th, table.t td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  table.t th { font-family: "IBM Plex Mono", monospace; font-size: 7.8pt; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); font-weight: 500; background: var(--soft); }
+  table.t td.num { font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+
+  .formula {
+    font-family: "IBM Plex Mono", monospace; font-size: 9.8pt;
+    background: var(--soft); border-left: 3px solid var(--alta);
+    padding: 10px 14px; margin: 10px 0; break-inside: avoid; line-height: 1.7;
+  }
+  .up { color: var(--alta); font-weight: 600; }
+  .down { color: var(--baixa); font-weight: 600; }
+  figure { margin: 12px 0; break-inside: avoid; }
+  figcaption { font-size: 8.6pt; color: var(--dim); margin-top: 4px; }
+  .refs li { font-size: 9.3pt; }
+</style>
+
+<div class="eyebrow">Proposta de trabalho · Modelagem e Projeto de Algoritmos para o Mercado Financeiro</div>
+<h1>Cata-vento Seletivo</h1>
+<p class="sub">Robô de day trade no Mini Índice que usa Random Forest para escolher quais sinais operar, com retreino em janela móvel</p>
+
+<!-- ============================================================ -->
+<h2><span class="n">4.1</span>Título e identificação</h2>
+<table class="ident">
+  <tr><td>Título</td><td><b>Cata-vento Seletivo</b>: robô de day trade no Índice Futuro (WIN) com filtro de sinais por Random Forest retreinado em janela móvel (<i>walk-forward</i>)</td></tr>
+  <tr><td>Integrantes</td><td>Luisa Caetano Araujo · RA <span class="preencher">__________</span><br>Raíssa <span class="preencher">__________</span> · RA <span class="preencher">__________</span></td></tr>
+  <tr><td>Disciplina</td><td>Modelagem e Projeto de Algoritmos para o Mercado Financeiro</td></tr>
+  <tr><td>Professor</td><td>Prof. Alexandre Pimenta</td></tr>
+  <tr><td>Data de entrega</td><td><span class="preencher">___/___/2026</span></td></tr>
+  <tr><td>Etapa</td><td>Proposta conceitual e metodológica, sem implementação de código</td></tr>
+</table>
+
+<!-- ============================================================ -->
+<h2><span class="n">4.2</span>Objetivo e justificativa</h2>
+
+<h3>Objetivo específico do robô</h3>
+<p>Operar day trade no <b>Mini Índice Futuro da B3</b> (série contínua <code>WIN$</code> no backtest), no tempo gráfico de <b>15 minutos</b>. Uma regra de seguimento de tendência baseada no <b>DMI/ADX</b> gera os <i>candidatos</i> a entrada. Um classificador <b>Random Forest</b> estima, para cada candidato, a probabilidade de a operação atingir o alvo antes do stop, e o robô só entra quando essa probabilidade passa de um limiar <i>p*</i>. O modelo é <b>retreinado todo mês</b> com os seis meses de pregões imediatamente anteriores.</p>
+
+<h3>Por que usar Aprendizado de Máquina</h3>
+<ul>
+  <li><b>A mesma regra acerta em um contexto e erra em outro.</b> Um cruzamento de DI com ADX forte às 10h, logo após um gap, não é o mesmo sinal que o cruzamento às 16h num dia sem volatilidade. Uma regra fixa trata os dois igual. O modelo aprende, a partir do histórico, em quais contextos o sinal funciona.</li>
+  <li><b>As interações são não lineares.</b> "ADX alto só ajuda quando a volatilidade é média" é o tipo de condição que ninguém escreve à mão, mas que uma árvore de decisão encontra sozinha.</li>
+  <li><b>O mercado muda de regime.</b> O que separa sinal bom de sinal ruim em 2024 pode não valer em 2026. Retreinar em janela móvel mantém o modelo atualizado.</li>
+</ul>
+
+<h3>Vantagem competitiva esperada</h3>
+<ul>
+  <li><b>Menos operações ruins.</b> A regra base gera sinais em excesso de propósito. O filtro descarta os de baixa probabilidade, o que deve subir o fator de lucro e reduzir o rebaixamento, mesmo operando menos.</li>
+  <li><b>Base com vantagem medida.</b> A regra de entrada vem do robô <i>ADX Cata-vento</i> (Trabalho 01), que obteve fator de lucro de 1,36 em 533 operações no WINV26. O ML refina uma estratégia que já tem resultado, em vez de procurar uma do zero.</li>
+  <li><b>Validação honesta.</b> No Trabalho 01 não houve período fora da amostra, porque o contrato vence e o histórico some. A série contínua <code>WIN$</code> permite dezenas de meses fora da amostra.</li>
+  <li><b>Decisão explicável.</b> A importância das variáveis mostra o que o modelo está usando. Se ele passar a depender de algo sem sentido econômico, isso aparece.</li>
+</ul>
+
+<h3>Oportunidade de mercado</h3>
+<p>O Mini Índice é um dos contratos mais negociados da B3. Tem liquidez alta durante todo o pregão, margem baixa e valor de <b>R$ 0,20 por ponto</b> (variação mínima de 5 pontos), o que permite operar com capital pequeno e dimensionar posição em passos finos. O índice brasileiro tem movimentos intradiários direcionais frequentes, que são o terreno de uma estratégia de tendência. A obrigação de zerar no fim do dia elimina o risco de gap noturno.</p>
+
+<!-- ============================================================ -->
+<h2><span class="n">4.3</span>Descrição da estratégia</h2>
+
+<h3>Fundamentos</h3>
+<p>A estratégia segue tendência e tem duas camadas. A <b>camada de regra</b> usa o sistema DMI de Wilder: <b>DI+ e DI−</b> dizem <i>para onde</i> (qual lado manda) e o <b>ADX</b> diz se há força. O <b>ATR</b> mede a volatilidade corrente e define o tamanho do stop e do alvo. A <b>camada de aprendizado</b> recebe cada sinal da regra e decide se ele vale a pena naquele contexto.</p>
+
+<h3>Indicadores técnicos</h3>
+<table class="t">
+  <tr><th>Indicador</th><th>Uso na regra</th><th>Uso como variável do modelo</th></tr>
+  <tr><td>DI+ / DI− (12)</td><td>Lado dominante define compra ou venda</td><td>Diferença DI+ − DI−, no sentido da operação</td></tr>
+  <tr><td>ADX (12)</td><td>Filtro mínimo de força (ADX ≥ 20)</td><td>Nível e inclinação do ADX</td></tr>
+  <tr><td>ATR (14)</td><td>Escala stop, alvo e trava no zero a zero</td><td>ATR relativo ao preço e seu percentil recente</td></tr>
+  <tr><td>VWAP do dia</td><td>—</td><td>Distância do preço à VWAP, em ATRs</td></tr>
+</table>
+<p>DMI 12 e ADX ≥ 20 ficam fixos. No Trabalho 01, o fator de lucro ficou entre 1,24 e 1,42 com o período do DMI variando de 8 a 20, então esse valor não é crítico. O limiar 20 é mais permissivo que o clássico 25 de propósito: a regra gera mais candidatos e a floresta faz a seleção fina.</p>
+
+<h3>Regras de entrada</h3>
+<p>Avaliadas apenas no fechamento de cada barra de 15 minutos, sobre barras já fechadas:</p>
+<ul>
+  <li><span class="up">Candidato de compra:</span> DI+ &gt; DI− &nbsp;e&nbsp; ADX ≥ 20 &nbsp;e&nbsp; ADX subindo em relação à barra anterior.</li>
+  <li><span class="down">Candidato de venda:</span> DI− &gt; DI+ &nbsp;e&nbsp; ADX ≥ 20 &nbsp;e&nbsp; ADX subindo em relação à barra anterior.</li>
+  <li><b>Filtro do modelo:</b> o robô entra somente se <i>P</i>(alvo antes do stop) ≥ <i>p*</i>, onde <i>P</i> vem do Random Forest e <i>p*</i> é escolhido na validação (seção 4.4).</li>
+  <li><b>Filtros operacionais:</b> horário entre 09:15 e 17:00, nenhuma posição aberta, limites diários não atingidos.</li>
+</ul>
+
+<h3>Regras de saída, com justificativa</h3>
+<table class="t">
+  <tr><th>Saída</th><th>Regra</th><th>Justificativa</th></tr>
+  <tr><td>Stop loss</td><td>1,5 × ATR a partir da entrada</td><td>Limita a perda a um múltiplo do ruído normal do mercado. Um stop fixo em pontos fica curto em dia volátil e largo em dia calmo.</td></tr>
+  <tr><td>Take profit</td><td>3,0 × ATR a partir da entrada</td><td>Relação 2:1 entre alvo e stop, próxima da usada no Trabalho 01 (375 / 150 pontos). Com ela, basta acertar mais de 1/3 das operações para cobrir as perdas antes dos custos.</td></tr>
+  <tr><td>Trava no zero a zero</td><td>Stop vai ao preço de entrada após 1,5 × ATR a favor</td><td>Impede que uma operação que já andou a favor vire perda. No Trabalho 01 a trava melhorou o modo de entrada por estado (1,26 → 1,34).</td></tr>
+  <tr><td>Fim do pregão</td><td>Zera tudo às 17:30</td><td>É day trade: não carrega posição para o dia seguinte, o que elimina o risco de gap noturno e a margem de custódia.</td></tr>
+</table>
+<p>As mesmas regras de saída, inclusive a trava no zero a zero, definem o <b>rótulo</b> com que o modelo é treinado (seção 4.4). Assim o modelo aprende o mesmo evento que decide o resultado da operação real.</p>
+
+<h3>Gestão de risco e tamanho de posição</h3>
+<ul>
+  <li><b>Toda ordem sai com stop e alvo</b> registrados na corretora no momento da entrada.</li>
+  <li><b>Tamanho por risco, modulado pela confiança do modelo:</b> o risco por operação é <i>R</i> = 0,25% do capital se <i>p*</i> ≤ <i>P</i> &lt; 0,65, e <i>R</i> = 0,5% se <i>P</i> ≥ 0,65.
+    <div class="formula">contratos = max(1, min(5, ⌊ R × Capital / (1,5 × ATR × R$ 0,20) ⌋ ))</div>
+    Com capital de R$ 20.000, <i>R</i> = 0,5% e ATR de 140 pontos (stop de 210 pontos, R$ 42 por contrato): ⌊100 / 42⌋ = 2 contratos. Quando a volatilidade sobe o stop alarga e o número de contratos cai, então o risco em reais fica constante.</li>
+  <li><b>Trava diária:</b> no máximo 4 operações por dia. O robô para no dia após perder 1,5% do capital ou após 3 stops seguidos.</li>
+  <li><b>Uma posição por vez</b>, sem preço médio e sem aumentar posição perdedora.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2><span class="n">4.4</span>Sistema de aprendizado de máquina</h2>
+
+<h3>Técnica escolhida: Random Forest</h3>
+<p>O problema é de <b>classificação</b>: dado o contexto do mercado no momento de um sinal, a operação vai atingir o alvo antes do stop? O Random Forest (Breiman, 2001) é um conjunto de árvores de decisão, cada uma treinada numa amostra diferente dos dados e com um subconjunto aleatório das variáveis. A probabilidade final é a média das estimativas das árvores: cada folha guarda a proporção de exemplos do treino que bateram o alvo. Escolhemos a técnica por cinco motivos:</p>
+<ul>
+  <li><b>Funciona com poucos dados.</b> Seis meses geram algumas centenas de sinais. O Random Forest lida bem com esse tamanho. Uma rede LSTM precisaria de muito mais exemplos e tenderia a decorar ruído.</li>
+  <li><b>Resiste ao sobreajuste.</b> A média de centenas de árvores diferentes reduz a variância de uma árvore isolada, e a profundidade limitada impede que cada árvore decore o treino.</li>
+  <li><b>Capta interações não lineares</b> entre variáveis sem que precisemos especificá-las, e dispensa normalização.</li>
+  <li><b>Treina em segundos.</b> Retreinar a cada janela não tem custo relevante. Um backtest por indivíduo, como num Algoritmo Genético, custaria horas por ciclo.</li>
+  <li><b>É interpretável e fácil de implementar.</b> A importância das variáveis mostra o que pesa na decisão. A implementação usa o <code>RandomForestClassifier</code> do scikit-learn, e o modelo pode ser exportado em ONNX para rodar dentro do MetaTrader 5.</li>
+</ul>
+<p>As alternativas foram descartadas por motivos específicos. <b>Redes neurais (LSTM)</b> exigem muitos dados, são lentas de treinar, sensíveis a hiperparâmetros e opacas. O <b>Algoritmo Genético</b> otimiza parâmetros fixos, mas não olha o contexto de cada operação. A <b>Lógica Fuzzy</b> depende de funções de pertinência definidas à mão.</p>
+
+<h3>Variáveis de entrada (features)</h3>
+<p>Calculadas no fechamento da barra do sinal, só com informação disponível naquele instante. As variáveis de direção são multiplicadas pelo sentido da operação (+1 compra, −1 venda), para que "a favor" signifique o mesmo nos dois lados e um único modelo sirva para compra e venda.</p>
+<table class="t">
+  <tr><th>Grupo</th><th>Variável</th></tr>
+  <tr><td>Tendência</td><td>ADX; inclinação do ADX em 3 barras; (DI+ − DI−) × sentido</td></tr>
+  <tr><td>Volatilidade</td><td>ATR / preço; percentil do ATR nos últimos 20 pregões; amplitude do dia até agora em ATRs</td></tr>
+  <tr><td>Momento</td><td>Retorno das últimas 1, 4 e 16 barras × sentido, em ATRs</td></tr>
+  <tr><td>Posição no dia</td><td>Distância à VWAP × sentido, em ATRs; posição do preço na máxima e mínima do dia (0 a 1); gap de abertura × sentido, em ATRs</td></tr>
+  <tr><td>Fluxo</td><td>Volume da barra ÷ média do mesmo horário nos últimos 20 pregões</td></tr>
+  <tr><td>Calendário</td><td>Minutos desde a abertura; dia da semana</td></tr>
+  <tr><td>Sinal</td><td>Sentido (+1/−1); operações já feitas no dia</td></tr>
+</table>
+
+<h3>Rótulo (o que o modelo aprende)</h3>
+<p>Cada sinal da regra base no histórico é simulado com as mesmas saídas da seção 4.3 (stop, alvo, trava no zero a zero e encerramento às 17:30), numa adaptação do método das três barreiras (López de Prado, 2018):</p>
+<div class="formula">
+y = 1 &nbsp;se a operação sai no alvo (3,0 × ATR)<br>
+y = 0 &nbsp;se sai no stop (1,5 × ATR), na trava no zero a zero ou no encerramento das 17:30
+</div>
+
+<h3>O que se pretende otimizar</h3>
+<ul>
+  <li><b>A seleção das operações:</b> o modelo aprende a probabilidade <i>P</i>(y = 1 | contexto).</li>
+  <li><b>O limiar de entrada <i>p*</i></b>, entre 0,40 e 0,70 em passos de 0,025: define quantos sinais passam pelo filtro.</li>
+  <li><b>Os hiperparâmetros</b> do Random Forest: profundidade máxima {3, 5, 8}, mínimo de amostras por folha {5, 10, 20} e fração de variáveis por divisão {√p, 0,5}. O número de árvores fica fixo em 300 e as classes são balanceadas por peso.</li>
+</ul>
+<p>As regras de DMI/ADX e as saídas em ATR ficam fixas. Isso mantém o rótulo estável e evita otimizar a regra e o filtro ao mesmo tempo, o que multiplicaria o risco de sobreajuste.</p>
+
+<h3>Função objetivo</h3>
+<p>São dois níveis. As <b>árvores</b> são construídas minimizando a impureza de Gini, o critério padrão de classificação. A <b>escolha de hiperparâmetros e limiar</b> não usa acurácia, porque acurácia alta não garante dinheiro. Ela usa o resultado financeiro das operações filtradas no trecho de validação, já com custos:</p>
+<div class="formula">
+F(θ, p*) = LucroLíquido / RebaixamentoMáximo &nbsp;&nbsp;(fator de recuperação)<br>
+<span style="color:var(--dim)">sujeito a: N ≥ 20 operações e fator de lucro ≥ 1,05; se violar, F = −1</span>
+</div>
+<ul>
+  <li><b>Fator de recuperação:</b> premia ganhar muito arriscando pouco. Maximizar só o lucro escolheria filtros que ganham com rebaixamentos insuportáveis.</li>
+  <li><b>N ≥ 20:</b> impede que o limiar suba tanto que sobrem três operações de sorte.</li>
+  <li><b>Custos:</b> R$ 0,50 por contrato por lado de emolumentos e corretagem, mais 1 tick (5 pontos) de derrapagem por lado. É uma premissa conservadora.</li>
+  <li><b>Métricas de acompanhamento</b>, que não decidem nada: AUC, precisão e a curva de calibração das probabilidades.</li>
+</ul>
+
+<h3>Arquitetura temporal: janela móvel (walk-forward)</h3>
+<figure>
+<svg viewBox="0 0 740 200" width="100%" role="img" aria-label="Janelas de treinamento, validação e execução deslizando no tempo">
+  <style>
+    .tr { fill: #DCEFE6; stroke: #12875A; }
+    .va { fill: #D9E6F5; stroke: #3B6EA8; }
+    .ex { fill: #FBE3B0; stroke: #B07A0C; }
+    .lb { font: 500 11px "IBM Plex Mono", monospace; fill: #4A5A66; }
+    .in { font: 500 10.5px "IBM Plex Sans", sans-serif; fill: #141A1F; }
+  </style>
+  <text class="lb" x="0" y="34">Ciclo 1</text>
+  <rect class="tr" x="70" y="20" width="270" height="22" rx="2"/><text class="in" x="205" y="35" text-anchor="middle">Treino · 90 pregões</text>
+  <rect class="va" x="340" y="20" width="90" height="22" rx="2"/><text class="in" x="385" y="35" text-anchor="middle">Validação · 30</text>
+  <rect class="ex" x="430" y="20" width="60" height="22" rx="2"/><text class="in" x="460" y="35" text-anchor="middle">Exec. · 20</text>
+  <text class="lb" x="0" y="72">Ciclo 2</text>
+  <rect class="tr" x="130" y="58" width="270" height="22" rx="2"/><text class="in" x="265" y="73" text-anchor="middle">Treino · 90 pregões</text>
+  <rect class="va" x="400" y="58" width="90" height="22" rx="2"/><text class="in" x="445" y="73" text-anchor="middle">Validação · 30</text>
+  <rect class="ex" x="490" y="58" width="60" height="22" rx="2"/><text class="in" x="520" y="73" text-anchor="middle">Exec. · 20</text>
+  <text class="lb" x="0" y="110">Ciclo 3</text>
+  <rect class="tr" x="190" y="96" width="270" height="22" rx="2"/><text class="in" x="325" y="111" text-anchor="middle">Treino · 90 pregões</text>
+  <rect class="va" x="460" y="96" width="90" height="22" rx="2"/><text class="in" x="505" y="111" text-anchor="middle">Validação · 30</text>
+  <rect class="ex" x="550" y="96" width="60" height="22" rx="2"/><text class="in" x="580" y="111" text-anchor="middle">Exec. · 20</text>
+  <text class="lb" x="0" y="148">…</text>
+  <line x1="70" y1="172" x2="730" y2="172" stroke="#4A5A66"/>
+  <polygon points="730,168 738,172 730,176" fill="#4A5A66"/>
+  <text class="lb" x="70" y="192">tempo →</text>
+  <text class="lb" x="400" y="150">execuções concatenadas = curva fora da amostra</text>
+</svg>
+<figcaption>Janela de treinamento de 120 pregões: os 90 primeiros ajustam o modelo e os 30 últimos escolhem hiperparâmetros e limiar. Depois o modelo é retreinado nos 120 pregões completos e opera nos 20 seguintes. Tudo avança 20 pregões e o ciclo se repete.</figcaption>
+</figure>
+<ul>
+  <li><b>Janela de treinamento:</b> 120 pregões contínuos (cerca de 6 meses e algumas centenas de sinais). Os 90 primeiros treinam candidatos, e os 30 últimos, sempre posteriores, escolhem hiperparâmetros e <i>p*</i> pela função objetivo. O modelo final é retreinado nos 120 pregões com a configuração vencedora.</li>
+  <li><b>Janela de execução:</b> os 20 pregões seguintes (cerca de 1 mês). O robô opera com o modelo congelado.</li>
+  <li><b>Deslocamento:</b> ao fim de cada execução, as janelas avançam 20 pregões e o modelo é retreinado. Na operação real isso acontece no fim de semana.</li>
+  <li><b>Período de estudo:</b> <code>WIN$</code> M15 de janeiro de 2023 a outubro de 2026, cerca de 940 pregões e <b>~40 ciclos</b> fora da amostra.</li>
+</ul>
+
+<h3>Restrições do problema</h3>
+<ul>
+  <li><b>Operacionais:</b> apenas day trade, com tudo zerado às 17:30. Uma posição por vez. Toda ordem com stop e alvo. Máximo de 4 operações por dia.</li>
+  <li><b>Sem olhar o futuro:</b> as variáveis usam só barras fechadas. Validação sempre posterior ao treino, sem embaralhar a ordem temporal. A janela de execução nunca influencia o modelo.</li>
+  <li><b>Sem vazamento de rótulo:</b> toda operação simulada fecha até as 17:30 do mesmo pregão, então o rótulo de um sinal nunca usa dados de outro dia. Nenhum rótulo do treino depende de preços da validação ou da execução.</li>
+  <li><b>Estatísticas:</b> desbalanceamento de classes tratado por peso. Mínimo de 20 operações na validação para aceitar uma configuração.</li>
+  <li><b>Da série contínua:</b> o <code>WIN$</code> emenda contratos com vencimentos diferentes. Por ser day trade, nenhuma posição atravessa a rolagem, e as variáveis que dependem de vários dias são recalculadas a partir do novo contrato.</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2><span class="n">5</span>Avaliação e próximos passos</h2>
+<h3>Como o resultado será medido</h3>
+<p>Só a curva <b>fora da amostra</b> (a concatenação das janelas de execução) conta como resultado. Ela será comparada com duas referências no mesmo período e com os mesmos custos:</p>
+<ol>
+  <li><b>Regra sem filtro:</b> todos os sinais da regra base são operados. Essa comparação isola o valor do Random Forest.</li>
+  <li><b>Cata-vento original:</b> o robô do Trabalho 01 com seus parâmetros fixos.</li>
+</ol>
+<p>Métricas: lucro líquido, fator de lucro, rebaixamento máximo, fator de recuperação, taxa de acerto, número de operações e AUC fora da amostra. A hipótese se confirma se o filtro superar a regra sem filtro em fator de recuperação na maioria dos ciclos. Se não superar, isso também é um resultado e será relatado como tal.</p>
+
+<h3>Plano de implementação (próxima etapa)</h3>
+<ol>
+  <li>Exportar as barras M15 do <code>WIN$</code> do MetaTrader 5 para CSV.</li>
+  <li>Em Python (pandas e scikit-learn): gerar os sinais da regra, calcular as variáveis e os rótulos, e rodar o laço walk-forward com treino, validação e execução.</li>
+  <li>Simular as operações filtradas com custos e gerar o relatório: curva fora da amostra, comparação com as referências e importância das variáveis ao longo dos ciclos.</li>
+  <li>Opcional: exportar o modelo em ONNX e carregá-lo num robô MQL5 para demonstrar a execução no Testador do MetaTrader 5.</li>
+</ol>
+
+<h2><span class="n">6</span>Referências</h2>
+<ul class="refs">
+  <li>BREIMAN, Leo. Random Forests. <i>Machine Learning</i>, v. 45, n. 1, p. 5–32, 2001.</li>
+  <li>LÓPEZ DE PRADO, Marcos. <i>Advances in Financial Machine Learning</i>. Hoboken: Wiley, 2018.</li>
+  <li>WILDER, J. Welles. <i>New Concepts in Technical Trading Systems</i>. Greensboro: Trend Research, 1978.</li>
+  <li>PARDO, Robert. <i>The Evaluation and Optimization of Trading Strategies</i>. 2. ed. Hoboken: Wiley, 2008.</li>
+  <li>PEDREGOSA, F. et al. Scikit-learn: Machine Learning in Python. <i>Journal of Machine Learning Research</i>, v. 12, p. 2825–2830, 2011.</li>
+  <li>B3. Contrato Futuro Mini de Ibovespa: especificações. Disponível em: b3.com.br.</li>
+</ul>
+</html>
